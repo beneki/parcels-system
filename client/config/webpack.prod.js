@@ -8,17 +8,17 @@ const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin")
 const CompressionPlugin = require("compression-webpack-plugin")
 const BrotliPlugin = require("brotli-webpack-plugin")
-const autoprefixer = require('autoprefixer');
+const autoprefixer = require("autoprefixer");
 
 module.exports = {
-  entry: './src/index.jsx',
+  entry: "./src/index.jsx",
   mode: "production",
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: ["babel-loader"]
       },
       { 
         test: /\.(woff|woff2|eot|ttf|svg)$/, 
@@ -83,12 +83,12 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ["*", ".js", ".jsx"]
   },
   output: {
     path: path.resolve(__dirname, "../dist"),
-    publicPath: '/',
-    filename: '[name]-bundle.js'
+    publicPath: "/",
+    filename: "[name]-bundle.js"
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -113,7 +113,7 @@ module.exports = {
   externals: {
       // global app config object
       config: JSON.stringify({
-          apiUrl: "https://saloodo-demo.herokuapp.com/api" // 'http://localhost:3000/api'
+          apiUrl: "http://localhost:3000/api"
       })
   }
 };

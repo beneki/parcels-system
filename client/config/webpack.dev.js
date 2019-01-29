@@ -1,16 +1,16 @@
 const path = require("path");
-const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
+const webpack = require("webpack");
+const autoprefixer = require("autoprefixer");
 
 module.exports = {
-  entry: './src/index.jsx',
+  entry: "./src/index.jsx",
   mode: "development",
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: ["babel-loader"]
       },
       { 
         test: /\.(woff|woff2|eot|ttf|svg)$/, 
@@ -45,22 +45,12 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ["*", ".js", ".jsx"]
   },
-  // output: {
-  //   path: __dirname + '/dist',
-  //   publicPath: '/',
-  //   filename: 'bundle.js'
-  // },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     autoprefixer
   ],
-  // devServer: {
-  //   contentBase: './dist',
-  //   hot: true
-  // }
-
   output: {
     filename: "[name]-bundle.js",
     path: path.resolve(__dirname, "../dist"),
@@ -78,7 +68,7 @@ module.exports = {
   externals: {
       // global app config object
       config: JSON.stringify({
-          apiUrl: 'http://localhost:3000/api'
+          apiUrl: "http://localhost:3000/api"
       })
   }
 };
