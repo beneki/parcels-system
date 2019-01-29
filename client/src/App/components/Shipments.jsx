@@ -83,7 +83,14 @@ class Shipments extends React.Component {
         let domCols = [];
         if (row) {
             this.props.headers.forEach((head) => {
-                domCols.push(<Td key="col">{ head === "orderStatus" ? this.renderOrderStatus(row): row[head]}</Td>)
+                domCols.push(<Td key="col">{ 
+                    head === "orderStatus" 
+                        ? this.renderOrderStatus(row)
+                        : (head === "BikerId" && row[head] === null 
+                            ? "No One"
+                            : row[head]
+                          )
+                    }</Td>)
             });
         }
         return <Tr 

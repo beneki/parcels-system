@@ -6,6 +6,7 @@ import { Container, Row, Col, Button, ButtonGroup, Alert } from 'reactstrap';
 import { userActions } from './../../actions';
 import './../../assets/style/global/main.css'
 import './../../assets/style/global/util.css';
+import { HypeImgs } from './../../constants/_temperrory.constants';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -17,6 +18,12 @@ class LoginPage extends React.Component {
             username: '',
             password: '',
             submitted: false
+            // localImgs: {
+            //     login: {
+            //         admin: "./../../assets/images/manager.png",
+            //         biker: "./../../assets/images/biker.png",
+            //     }
+            // }
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -53,6 +60,28 @@ class LoginPage extends React.Component {
         }
     }
 
+    renderImgDep(isAdmin, imgsSrc) { // temp function
+        let finalImg = "";
+        if (isAdmin) { // Admin role
+            finalImg = imgsSrc.login.admin;
+        } else { // Biker role
+            finalImg = imgsSrc.login.biker;
+        }
+        return finalImg;
+    }
+    
+    renderImgs(isAdmin = true, shouldHyper) { // temp function
+        if (shouldHyper) { // Should Get images from HyperLink
+            return this.renderImgDep(isAdmin, HypeImgs);
+        }
+        // else {
+            // return this.renderImgDep(isAdmin, this.state.localImgs);
+        // }
+
+    }
+
+
+
     render() {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
@@ -61,7 +90,7 @@ class LoginPage extends React.Component {
                 <div className="container-login100">
                     <Container className="wrap-login100">
                         <Col md="6" sm="12" className="login100-pic js-tilt" data-tilt>
-                            <img src={require(this.state.isAdmin ? "./../../assets/images/manager.png": "./../../assets/images/biker.png")} alt="IMG" />
+                            <img src={ this.renderImgs(this.state.isAdmin, true) } alt="IMG" />
                         </Col>
                         <Col md="6" sm="12">
                             <form className="login100-form validate-form" style={{textAlign: "center"}} onSubmit={this.handleSubmit}>
@@ -104,6 +133,13 @@ class LoginPage extends React.Component {
                                     </Alert>
                                 }
             
+                                    <Alert style={{marginTop: '15px', fontSize: '12px'}} color="primary">
+                                        Admin Username: admin <br />
+                                        Admin Password: admin <br />
+                                        <br />
+                                        Biker Username: biker <br />
+                                        Biker Password: biker <br />
+                                    </Alert>
                                 <div className="login-info" style={{fontSize: '13px', paddingTop: '136px'}}>
                                           © 2019 Copyright : 
                                           <a href="https://github.com/hoseingp/">

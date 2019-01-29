@@ -38,6 +38,8 @@ export function shipments(state = INITIAL_STATE, action) {
           }
         }
       )};
+    case shipmentConstants.SHIPMENTS_UPDATE_SUCCESS:
+      return { ...INITIAL_STATE, changedItems: [], items: action.shipments.items, hasData: true, loading: false }
     case shipmentConstants.SETSHIPS_ASSIGN_BIKER:
       return { ...state, changedItems: state.changedItems.map(item => {
         if(item.orderStatus === 1) {

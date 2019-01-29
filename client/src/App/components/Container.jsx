@@ -7,22 +7,24 @@ import { Alert } from 'reactstrap'
 
 class Container extends React.Component {
   renderAlert(alert) {
-    ReactDOM.findDOMNode(this).scrollIntoView();
+    window.scrollTo(0, 0);
     return <Alert color={alert.type}> {alert.message} </Alert>;
   }
+
   render() {
     const { user, alert, dispatch } = this.props;
     return (
       <div>
           <Header user={user} dispatch={dispatch} />
                 { alert.type && this.renderAlert(alert) }
-                <div style={{marginTop: '15px'}}>
+                <div style={{marginTop: '3em'}}>
                   {this.props.children}
                 </div>
-          <Footer />
+          <Footer role={user.role} />
       </div>
     );
   }
+  
 }
 
 function mapStateToProps(state) {

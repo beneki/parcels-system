@@ -13,9 +13,9 @@ class BikerPage extends React.Component {
         this.state = {
           modal: false,
           shipmentItem: null,
-          submitBtns: <div style={styles.submitBtns}>
+          submitBtns: (<div style={styles.submitBtns}>
                             <Button color="primary" onClick={() => this.buttonPerSitu(true)}>Submit</Button>
-                      </div>
+                      </div>)
         };
 
         this.toggle = this.toggle.bind(this);
@@ -30,15 +30,15 @@ class BikerPage extends React.Component {
     buttonPerSitu(isSubmit) {
         let retBtns = <div>is Loading...</div>;
         if (isSubmit) {
-            retBtns = <div style={styles.submitBtns}>
+            retBtns = (<div style={styles.submitBtns}>
                           <span style={{alignSelf: 'left'}}>Are you sure ? </span>
                           <Button color="primary" onClick={() => this.submitChanges()}>Yes</Button>
                           <Button color="primary" onClick={() => this.buttonPerSitu(false)}>No</Button>
-                       </div>;
+            </div>);
         } else {
-            retBtns = <div style={styles.submitBtns}>
+            retBtns = (<div style={styles.submitBtns}>
                           <Button color="primary" onClick={() => this.buttonPerSitu(true)}>Submit</Button>
-                      </div>;
+            </div>);
         }
         this.setState({ submitBtns : retBtns});
     }
@@ -69,14 +69,23 @@ class BikerPage extends React.Component {
                     [_timestampKey]: timeStampVal
                 }
             ));
-            this.toggle();
+            
+        } else {
+            this.props.dispatch(shipmentActions.changeField(
+                {
+                    ...this.state.shipmentItem,
+                    [_timestampKey]: timeStampVal
+                }
+            ));
         }
+        this.toggle();
     };
 
     submitChanges() {
         this.props.dispatch(shipmentActions.updateShipments(this.props.shipments.changedItems))
             .then(() => {
-                this.toggle();
+                this.buttonPerSitu(false)
+                //this.toggle();
             })
     }
 

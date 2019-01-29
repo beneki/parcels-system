@@ -9,8 +9,13 @@ class Footer extends React.Component {
           <div className="row">
             <div className="col-md-6 mt-md-0 mt-3">
               <h5 className="text-uppercase" style={{margin: '20px 0 10px'}}>Help :</h5>
-              <p>Add changes from top table to bottom table</p>
-              <p>And then submit changes with submit button</p>
+              <p>Change orderStatus of Items from top table then the Item will be added to bottom table (Changed Sipments Table)
+               { this.props.role === 'admin' 
+                    ? 'You can assigne a biker to bootom table items or de assingn biker of the items in top table'
+                    : 'And a something will pop up to set a time for parcel if the item is PICKING_UP or DELIVERING'
+                }
+                And Finally You can submit changes
+              </p>
 
             </div>
             <hr className="clearfix w-100 d-md-none pb-3" />
@@ -18,7 +23,7 @@ class Footer extends React.Component {
         </div>
         <div className="footer-copyright text-center py-3" style={styles.bottom}>© 2019 Copyright :
           <a style={styles.tag} href="https://github.com/hoseingp/"> H.Ekrami</a>
-          <spa>{' for '}</spa>
+          <span>{' for '}</span>
           <a style={styles.tag} href="https://saloodo.com/"> Saloodo Company</a>
         </div>
       </footer>

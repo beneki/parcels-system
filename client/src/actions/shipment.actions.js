@@ -96,7 +96,7 @@ const getAll = () => {
 
 }, updateShipments = (changedItems) => {
     const request = () => ({ type: shipmentConstants.SHIPMENTS_UPDATE_REQUEST }),
-          success = (success) => ({ type: shipmentConstants.SHIPMENTS_UPDATE_SUCCESS, success }),
+          success = (shipments) => ({ type: shipmentConstants.SHIPMENTS_UPDATE_SUCCESS, shipments }),
           failure = (error) => ({ type: shipmentConstants.SHIPMENTS_UPDATE_FAILURE, error });
 
     return dispatch => {
