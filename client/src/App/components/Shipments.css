@@ -1,0 +1,68 @@
+.panel-body {
+    height: 300px;
+  }
+
+  table {
+    border-top: 1px solid black;    /* Just to Highlight Top of Table */
+  }
+  table thead tr {
+    height: 5em;    /* Fixed Row Height */
+  }
+  
+  /* Flex Table */
+  table {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  table thead,
+  table tbody {
+    display: block;
+  }
+  table thead {
+    margin-right: 0px;
+    background: #4b75a0;
+    color: #f3f3f3;
+  }
+  table tbody {
+    flex: 1;
+    overflow-y: scroll;
+    height: 300px;
+    padding: 10px;
+  }
+  table tr {
+    width: 100%;
+    display: flex;
+  }
+  table tr td,
+  table tr th {
+    display: flex;
+    flex: 1;
+    align-items:center;
+    justify-content:center;
+  }
+
+  /* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #4b75a0; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3a6794; 
+  }
+
+
+
+
+  

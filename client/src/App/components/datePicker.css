@@ -1,0 +1,15 @@
+.m-input-moment .tabs {
+    margin-bottom: 30px;
+}
+table {
+    border-top: 0px none;
+}
+table thead tr {
+    height: auto;
+    background: #fff;
+}
+table tbody {
+    overflow-y: hidden;
+    padding: 0;
+}
+

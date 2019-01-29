@@ -1,0 +1,12 @@
+[
+    {
+        "id": 0,
+        "FirstName": "Denise",
+        "LastName": "Schmelzer",
+        "Location": "Dortmond",
+        "Age": 30,
+        "Email": "Denise.schmelzer@gmail.com",
+        "Cell": 555444333,
+        "Address": "No22, Dortmond"
+    }
+]
