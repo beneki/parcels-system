@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Rrdirect } from 'react-router-dom';
+import { Router, Route, Rrdirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { history } from './../helpers';
 import { alertActions } from './../actions';
@@ -8,7 +8,8 @@ import { AppContainer } from './';
 import { AdminPage, BikerPage } from './Authorized';
 import { NotFound, NotAuthorized } from './Handlers';
 import { LoginPage } from './Login/LoginPage';
-import './../assets/style/global/global.less'
+import './../assets/style/global/global.less';
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -23,12 +24,14 @@ class App extends React.Component {
         return (
             <Router history={history}>
                 <div>
-                    <PrivateRoute exact path="/admin" role={['admin']} component={AdminPage} />
-                    <PrivateRoute exact path="/biker" role={['biker']} component={BikerPage} />
-                    <Route path="/login" component={LoginPage} />
-                    <Route path="/" exact component={LoginPage} />
-                    <Route path="/not-authorized" exact component={NotAuthorized} />
-                    <Route path="/not-fount" exact component={NotFound} />
+                    <Switch>
+                        <Route path="/" exact component={LoginPage} />
+                        <Route path="/login" component={LoginPage} />
+                        <PrivateRoute exact path="/admin" role={['admin']} component={AdminPage} />
+                        <PrivateRoute exact path="/biker" role={['biker']} component={BikerPage} />
+                        <Route path="/not-authorized" exact component={NotAuthorized} />
+                        <Route component={NotFound} />
+                    </Switch>
                 </div>
             </Router>
         );

@@ -1,22 +1,24 @@
 import React from 'react';
-import { Router } from 'react-router-dom';
+import { history } from '../../helpers';
+import { Button } from 'reactstrap';
 
 class NotFound extends React.Component {
-    constructor(props) {
-        super(props);
-        const { dispatch } = this.props;
-        history.listen((location, action) => {
-            // clear alert on location change
-            dispatch(alertActions.clear());
-        });
+    redirectTo(page) {
+        if(page === 'login') {
+            history.push('/login');
+        }
+        
     }
 
     render() {
-        const { alert } = this.props;
         return (
-                <H1>Page Not Found</H1>
+            <div style={{textAlign: 'center', marginTop: '2em'}}>
+                <h1 style={{marginBottom: '1em'}}>Page Not Found</h1>
+                <Button onClick={() => this.redirectTo('login')}> Go to login page</Button>
+            </div>
         );
     }
+
 }
 
 export { NotFound };

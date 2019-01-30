@@ -1,6 +1,7 @@
 import React from 'react';
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ReactPaginate from 'react-paginate';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import './../../assets/style/components/shipments.less';
@@ -129,9 +130,11 @@ class Shipments extends React.Component {
                                 {this.renderRows(this.props.rows)}
                             </Tbody>
                     </Table>
+                    
+                    
                     {this.props.wantPaging && <ReactPaginate
-                        previousLabel={'previous'}
-                        nextLabel={'next'}
+                        previousLabel={<FontAwesomeIcon icon="chevron-left" />}
+                        nextLabel={<FontAwesomeIcon icon="chevron-right" />}
                         breakLabel={'...'}
                         breakClassName={'break-me'}
                         pageCount={this.state.pageCount}
