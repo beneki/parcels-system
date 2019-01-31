@@ -36,30 +36,6 @@ class API {
         router.get('/', (req, res) => {
             res.send('Testing API');
         });
-        // router.get('/shipments', this.verifyToken, (req, res) => {
-        //     //const orderStatus = this.makeEnums({ 'WAITING': 0, ASSIGEND: 1, 'PICKE_UP': 2, 'DELIVERED': 3 });
-        //     // let userData = req.body;
-        //     // let user = new User(userData);
-            
-        //     const shipms = shipments.map((shipment) => {
-        //         if(shipment.BikerId !== null) {
-        //             const theBiker = bikers.find((biker) => biker.id === shipment.BikerId);
-
-        //             return {
-        //                 ...shipment,
-        //                 assignee: theBiker.FirstName + ' ' + theBiker.LastName
-        //             };
-        //         } else {
-        //             return {
-        //                 ...shipment,
-        //                 assignee: 'No biker assigned'
-        //             };
-
-        //         }
-        //     });
-
-        //     res.status(200).send(shipms);
-        // });
         router.get('/shipments/limit/:limit/offset/:offset/', this.verifyToken, (req, res) => {
             const { limit, offset } = req.params;
             const shipms = shipments.slice((offset-1)*limit, offset* limit);
@@ -68,7 +44,16 @@ class API {
                     totalCount:  shipments.length,
                     limit: limit
                 },
-                items: shipms
+                items:  shipms.map(itm => ({ ...itm, bikerName: (() => {
+                                if (itm.BikerId) {
+                                    const bk = bikers.find(bk => bk.id === itm.BikerId);
+                                    return `${bk.FirstName} ${bk.LastName}`;
+                                } else {
+                                    return null;
+                                }
+                            })()
+                        })
+                    )
             };
             res.status(200).send(pagedData);
         });
@@ -90,16 +75,6 @@ class API {
         });
 
         router.get('/bikers', this.verifyToken, (req, res) => {
-            // const bikerPlus = bikers.map((biker) => {
-            //     const toShips = [];
-            //     shipments.forEach((shipm) => {
-            //         if(shipm.BikerId === biker.id ) {
-            //             toShips.push(shipm.id);
-            //         }
-            //     });
-            //     return { ...biker };
-            // });
-            console.log(bikers);
             res.status(200).send(bikers);
         });
 
@@ -113,7 +88,27 @@ class API {
                 if (err)  {
                     res.status(202).send({status: 'error', message: 'update operation has not been commited yet'});
                 } else {
-                    res.status(200).send({status: 'success', message: 'successfully updated'});
+                    const token = req.headers.authorization.split(' ')[1],
+                        userId = Number(jwt.decode(token.subject)),
+                        shipmsByBiker = shipments.filter((shipment) => (shipment.BikerId === userId)),
+                        shipms = shipmsByBiker.slice((0)*5, 1* 5);
+                        
+                    res.status(200).send(
+                        { 
+                            status: 'success',
+                            message: 'successfully updated',
+                            items:  shipms.map(itm => ({ ...itm, bikerName: (() => {
+                                            if (itm.BikerId) {
+                                                const bk = bikers.find(bk => bk.id === itm.BikerId);
+                                                return `${bk.FirstName} ${bk.LastName}`;
+                                            } else {
+                                                return null;
+                                            }
+                                        })()
+                                    })
+                            )
+                        }
+                    );
                 }
             });
         });
@@ -125,7 +120,7 @@ class API {
 
             if (authedUser) {
                 if (authedUser.password !== userData.password) {
-                    res.status(401).send({status: 'Error '+authedUser.password, message: 'Invalid password'+userData.password});
+                    res.status(401).send({status: 'Error '+authedUser.password, message: 'Invalid password'});
                 } else {
                     let userDetails = null;
                     if (authedUser.IsAdmin) {
