@@ -7,6 +7,7 @@ import { userActions } from './../../actions';
 import './../../assets/style/global/main.css'
 import './../../assets/style/global/util.css';
 import { HypeImgs } from './../../constants/_temperrory.constants';
+import Loader from 'react-loader-spinner'
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -45,17 +46,19 @@ class LoginPage extends React.Component {
         const { username, password } = this.state;
         const { dispatch } = this.props;
         if (username && password) {
-            dispatch(userActions.login(username, password)).then(user => {
-                if(user.role === 'admin') {
-                    history.push('/admin');
-                } else if (user.role === 'biker') {
-                    history.push('/biker');
-                } else if(user.role === "null") { // has no role
-                    history.push('/not-authorized');
-                } else { 
-                    history.push('/not-found');
-                }
-            })
+            if (!this.props.isLoading) {
+                dispatch(userActions.login(username, password)).then(user => {
+                    if(user.role === 'admin') {
+                        history.push('/admin');
+                    } else if (user.role === 'biker') {
+                        history.push('/biker');
+                    } else if(user.role === "null") { // has no role
+                        history.push('/not-authorized');
+                    } else { 
+                        history.push('/not-found');
+                    }
+                });
+            }
         }
     }
 
@@ -78,9 +81,7 @@ class LoginPage extends React.Component {
         // }
 
     }
-
-
-
+     
     render() {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
@@ -122,9 +123,19 @@ class LoginPage extends React.Component {
                                 </div>
                                 
                                 <div className="container-login100-form-btn">
-                                    <button className="login100-form-btn">
-                                        Login
-                                    </button>
+                                    { !this.props.isLoading 
+                                        ? <button className="login100-form-btn">
+                                            Login 
+                                        </button>
+                                        : <div className="login100-form-btn"> 
+                                            <Loader 
+                                                type="Oval"
+                                                color="#FFF"
+                                                height="25"	
+                                                width="25"
+                                            />   
+                                          </div>
+                                    }
                                 </div>
                                 { this.props.alert.type === "danger" &&
                                     <Alert style={{marginTop: '15px'}} color={this.props.alert.type}>
@@ -161,7 +172,7 @@ class LoginPage extends React.Component {
 
 function mapStateToProps(state) {
     const { authentication, alert } = state;
-    const { loggingIn } = authentication
+    const { loggingIn, isLoading } = authentication
     return {
         loggingIn,
         alert
