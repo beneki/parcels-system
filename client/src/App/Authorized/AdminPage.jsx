@@ -20,7 +20,6 @@ class AdminPage extends React.Component {
         this.toggle = this.toggle.bind(this);
     }
 
-
     toggle() {
         if(!this.state.modal) {
             this.props.dispatch(bikerActions.getAll());
@@ -80,12 +79,10 @@ class AdminPage extends React.Component {
         }
     }
 
-
-
     addToChangedItems({ currentTarget }, item, _fieldToChange) { // change orderStatus of the shipments
         const changedStatus = orderStatus.indexOf(currentTarget.textContent);
         if (changedStatus !== item.orderStatus) {
-            if ([2, 3].indexOf(changedStatus) === -1) { // the orderStatus is not PICKED_UP or DELIVERED
+            if (![item.orderStatus, changedStatus].some(st => [2, 3].indexOf(st) > -1)) { // the PICKED_UP or DELIVERED orderStatuses shouldn't be able to change or select by admin
                 if (!this.props.shipments.changedItems.some(itm => itm.id === item.id)) {
                     this.props.dispatch(shipmentActions.setChangedItem(true, {...item, BikerId: null , [_fieldToChange]: orderStatus.indexOf(currentTarget.textContent)}));
                 }
@@ -97,10 +94,10 @@ class AdminPage extends React.Component {
         this.props.dispatch(shipmentActions.changeField({ ...item, [_fieldToChange]: orderStatus.indexOf(currentTarget.textContent) }));
     }
 
-
     render() {
-        const { user, shipments, bikers, alert } = this.props;
-        let shipsHeaders = [], shipRows = [], shipmentsWillAssign = [];
+        const replaceHeads = { id: 'Number',origin: 'Origin', destination: 'Destination', orderStatus: 'Order Status', BikerId: 'Biker Id', bikerName: 'Biker Name', PickedUpTime: 'PickedUp Time', DeliveredTime: 'Delivered Time'},
+            { user, shipments, bikers, alert } = this.props;
+        let shipsHeaders = [], shipRows = [],  shipmentsWillAssign = [];
 
         if(shipments.items.length > 0) {
             const shipmsFirstItem = shipments.items[0];
@@ -120,6 +117,7 @@ class AdminPage extends React.Component {
                     dispatch={this.props.dispatch.bind(this)} 
                     changeField={this.addToChangedItems.bind(this)}
                     loadShipmentsFromServer={shipmentActions.getPage.bind(this)}
+                    replacements={replaceHeads}
                     wantPaging
                 />
 
@@ -133,6 +131,7 @@ class AdminPage extends React.Component {
                     changeField={this.changeOrderStatus.bind(this)}
                     loadShipmentsFromServer={shipments.changedItems}
                     removeField={shipmentActions.setChangedItem.bind(this)}
+                    replacements={replaceHeads}
                 />
                 <Button style={{marginTop: '15px'}} color="primary" onClick={this.toggle}>Submit Changes</Button>
                 {this.state.modal && <div className="Modal-container">  
@@ -153,7 +152,7 @@ class AdminPage extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     const { authentication, shipments, bikers  } = state;
     const { user } = authentication;
     return {
@@ -161,16 +160,12 @@ function mapStateToProps(state) {
         shipments,
         bikers
     };
-}
-
-const styles = {
+}, styles = {
     bikerContainer: {
         padding: '20px 25px'
     },
     header: {
         marginBottom: '25px'
     }
-}
-
-const connectedAdminPage = connect(mapStateToProps)(AdminPage);
+}, connectedAdminPage = connect(mapStateToProps)(AdminPage);
 export { connectedAdminPage as AdminPage };
