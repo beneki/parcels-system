@@ -13,9 +13,6 @@ app.use('/api', api);
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname , '/dist/index.html'));
 });
-app.get('*', function(req, res) { // 404
-    res.sendFile(path.join(__dirname , '/not-found.html'));
-});
 
 app.listen(PORT, function() { 
     /*eslint-disable */
