@@ -91,7 +91,6 @@ module.exports = {
     filename: "[name]-bundle.js"
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new MiniCSSExtractPlugin(),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/g,
