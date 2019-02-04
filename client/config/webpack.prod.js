@@ -94,8 +94,7 @@ module.exports = {
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/g,
       cssProcessor: require("cssnano"),
-      cssProcessorOptions: { discardComments: { removeAll: true } },
-      canPrint: true
+      cssProcessorOptions: { discardComments: { removeAll: true } }
     }),
     new HTMLWebpackPlugin({
       template: "./src/index.html",
