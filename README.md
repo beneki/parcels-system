@@ -7,7 +7,7 @@ A delivery system that collects and delivers parcels for people,This is done by 
 
 # Structure and flow
 
-![parcels-system](https://user-images.githubusercontent.com/20746347/52258957-2f4c1980-2936-11e9-908a-f3437d76a6ae.jpg)
+![parcels-system](https://user-images.githubusercontent.com/20746347/52259122-daf56980-2936-11e9-9967-b94236fc06f5.jpg)
 
 
 # Demo
