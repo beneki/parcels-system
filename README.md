@@ -1,10 +1,4 @@
-[![npm][npm]][npm-url]
-[![node][node]][node-url]
-[![deps][deps]][deps-url]
-[![tests][tests]][tests-url]
-[![cover][cover]][cover-url]
-[![chat][chat]][chat-url]
-[![size][size]][size-url]
+
 
 
 # Parcels System
